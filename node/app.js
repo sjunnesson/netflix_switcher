@@ -40,8 +40,8 @@ function launchSetupPage(key){
 
 }
 
-getNetflixID("1");
+getNetflixID("5");
 
 setInterval(function() {
-	getNetflixID("2");
+//	getNetflixID("2");
 }, 10000);
