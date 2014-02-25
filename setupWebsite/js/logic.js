@@ -2,6 +2,8 @@ var PARSE_APP_ID = "X9cQUkyFkubVnkM3s5RBEadjPo4lEcBwnnMv0Vjf";
 var PARSE_JAVASCRIPT_KEY = "rszotqzmclw1XxeInnfPbWHnEMyAPNUbBPerH36i";
 Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY);
 
+$('#saveDone').toggle();
+
 function getUrlVars() {
 	var vars = {};
 	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
@@ -30,20 +32,28 @@ function newParseMovieID() {
 	var Movies = Parse.Object.extend("Netflix_movies");
 	var movieUpdate = new Movies();
 	console.log("Movie ID: " + getUrlVarsFromString($("#movieID").val())["movieid"]);
+	console.log("Tag ID: " + tagID);
 
-	movieUpdate.set("movie_id", getUrlVarsFromString($("#movieID").val())["movieid"]);
-	movieUpdate.set("key", tagID);
+	if (getUrlVarsFromString($("#movieID").val())["movieid"] != undefined && tagID!=undefined) {
 
-	movieUpdate.save(null, {
-		success: function(movieUpdate) {
-			// Execute any logic that should take place after the object is saved.
-			$("#connectBtn").text("Done connecting");
-			//alert('New connection created for Netflix movie ID' + movieUpdate.movieID);
-		},
-		error: function(gameScore, error) {
-			// Execute any logic that should take place if the save fails.
-			// error is a Parse.Error with an error code and description.
-			alert('Failed to create new object, with error code: ' + error.description);
-		}
-	});
+		movieUpdate.set("movie_id", getUrlVarsFromString($("#movieID").val())["movieid"]);
+		movieUpdate.set("key", tagID);
+
+		movieUpdate.save(null, {
+			success: function(movieUpdate) {
+				// Execute any logic that should take place after the object is saved.
+				$("#tagPrompt").toggle();
+				$('#saveDone').toggle();
+
+				//alert('New connection created for Netflix movie ID' + movieUpdate.movieID);
+			},
+			error: function(gameScore, error) {
+				// Execute any logic that should take place if the save fails.
+				// error is a Parse.Error with an error code and description.
+				alert('Failed to create new object, with error code: ' + error.description);
+			}
+		});
+	} else {
+		console.log("No movie ID");
+	}
 }
