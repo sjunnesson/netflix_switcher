@@ -37,7 +37,7 @@ function newParseMovieID() {
 	movieUpdate.save(null, {
 		success: function(movieUpdate) {
 			// Execute any logic that should take place after the object is saved.
-			alert('New connection created for Netflix movie ID' + movieUpdate.id);
+			alert('New connection created for Netflix movie ID' + movieUpdate.movieID);
 		},
 		error: function(gameScore, error) {
 			// Execute any logic that should take place if the save fails.
